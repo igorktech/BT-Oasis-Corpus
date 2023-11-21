@@ -10,13 +10,14 @@ class Dialogue:
 
 
 class Utterance:
-    def __init__(self, speaker, text, da_label):
+    def __init__(self, speaker, text, da_label, conversation_id):
         self.speaker = speaker
         self.text = text
         self.da_label = da_label
+        self.conversation_id = conversation_id
 
     def __str__(self):
-        return str(self.speaker + " " + self.text + " " + self.da_label)
+        return str(self.speaker + " " + self.text + " " + self.da_label + " " + self.conversation_id)
 
 
 def process_transcript(turn_list, a_words_file, a_da_file, b_words_file, b_da_file, excluded_chars, excluded_tags):
@@ -87,7 +88,7 @@ def process_transcript(turn_list, a_words_file, a_da_file, b_words_file, b_da_fi
                     continue
 
                 # Create an utterance
-                utterances.append(Utterance(speaker, text, da))
+                utterances.append(Utterance(speaker, text, da, list(speaker_turns.keys())[0].split('.')[0]))
 
     # Create a dialogue
     conversation_id = list(speaker_turns.keys())[0].split('.')[0]
